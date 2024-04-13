@@ -329,5 +329,20 @@ test('micromark-extension-gfm-autolink-literal', async function (t) {
       )
     }
   )
-})
 
+  await t.test(
+    '![[Pasted image 20240411144818.png]]',
+    async function () {
+      assert.equal(
+        micromark(
+          '![[Pasted image 20240411144818.png]]',
+          {
+            extensions: [gfmAutolinkLiteral()],
+            htmlExtensions: [gfmAutolinkLiteralHtml()]
+          }
+        ),
+        '<img src="Pasted image 20240411144818.png" alt="Pasted image 20240411144818.png"></img>'
+      )
+    }
+  )
+})

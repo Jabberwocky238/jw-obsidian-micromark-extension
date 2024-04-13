@@ -57,3 +57,4 @@ function anchorFromToken(token, protocol) {
   this.raw(this.encode(url))
   this.tag('</a>')
 }
+

@@ -23,16 +23,10 @@ const wwwPrefix = {tokenize: tokenizeWwwPrefix, partial: true}
 const domain = {tokenize: tokenizeDomain, partial: true}
 const path = {tokenize: tokenizePath, partial: true}
 const trail = {tokenize: tokenizeTrail, partial: true}
-const emailDomainDotTrail = {
-  tokenize: tokenizeEmailDomainDotTrail,
-  partial: true
-}
+const emailDomainDotTrail = {tokenize: tokenizeEmailDomainDotTrail, partial: true}
 
 const wwwAutolink = {tokenize: tokenizeWwwAutolink, previous: previousWww}
-const protocolAutolink = {
-  tokenize: tokenizeProtocolAutolink,
-  previous: previousProtocol
-}
+const protocolAutolink = {tokenize: tokenizeProtocolAutolink, previous: previousProtocol}
 const emailAutolink = {tokenize: tokenizeEmailAutolink, previous: previousEmail}
 
 /** @type {ConstructRecord} */
