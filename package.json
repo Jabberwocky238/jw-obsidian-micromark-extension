@@ -55,6 +55,7 @@
     "prepack": "npm run build && npm run format",
     "build": "tsc --build --clean && tsc --build && type-coverage && micromark-build",
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
+    "test-zq": "node --conditions production dev/zq.js",
     "test-api-prod": "node --conditions production test/index.js",
     "test-api-dev": "node --conditions development test/index.js",
     "test-api": "npm run test-api-dev && npm run test-api-prod",
@@ -65,7 +66,7 @@
     "bracketSpacing": false,
     "semi": false,
     "singleQuote": true,
-    "tabWidth": 2,
+    "tabWidth": 4,
     "trailingComma": "none",
     "useTabs": false
   },
