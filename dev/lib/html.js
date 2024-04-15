@@ -5,59 +5,30 @@
  * @typedef {import('micromark-util-types').Token} Token
  */
 
-import {sanitizeUri} from 'micromark-util-sanitize-uri'
+// variablesHtml is a function that 
+// receives an object mapping “variables” to strings and returns an HTML extension. 
 
-/**
- * Create an HTML extension for `micromark` to support GitHub autolink literal
- * when serializing to HTML.
- *
- * @returns {HtmlExtension}
- *   Extension for `micromark` that can be passed in `htmlExtensions` to
- *   support GitHub autolink literal when serializing to HTML.
- */
-export function gfmAutolinkLiteralHtml() {
+// The extension hooks two functions to variableString, 
+// one when it starts, the other when it ends. 
+// We don’t need to do anything to handle the other tokens as they’re already ignored by default. 
+// enterVariableString calls buffer, which is a function that “stashes” what would otherwise be emitted. 
+// exitVariableString calls resume, which is the inverse of buffer and returns the stashed value. 
+// If the variable is defined, we ensure it’s made safe (with this.encode) and finally output that (with this.raw).
+
+export function jwObsidianHtml(data = {}) {
   return {
-    exit: {
-      literalAutolinkEmail,
-      literalAutolinkHttp,
-      literalAutolinkWww
-    }
+    enter: { jwObsidianImageString: enterVariableString },
+    exit: { jwObsidianImageString: exitVariableString },
   }
-}
 
-/**
- * @this {CompileContext}
- * @type {Handle}
- */
-function literalAutolinkWww(token) {
-  anchorFromToken.call(this, token, 'http://')
-}
+  function enterVariableString() {
+    this.buffer()
+  }
 
-/**
- * @this {CompileContext}
- * @type {Handle}
- */
-function literalAutolinkEmail(token) {
-  anchorFromToken.call(this, token, 'mailto:')
-}
-
-/**
- * @this {CompileContext}
- * @type {Handle}
- */
-function literalAutolinkHttp(token) {
-  anchorFromToken.call(this, token)
-}
-
-/**
- * @this CompileContext
- * @param {Token} token
- * @param {string | null | undefined} [protocol]
- * @returns {undefined}
- */
-function anchorFromToken(token, protocol) {
-  const url = this.sliceSerialize(token)
-  this.tag('<a href="' + sanitizeUri((protocol || '') + url) + '">')
-  this.raw(this.encode(url))
-  this.tag('</a>')
+  function exitVariableString() {
+    var id = this.resume()
+    this.tag('<img src="' + id + '">')
+    this.raw(this.encode(id))
+    this.tag('</img>')
+  }
 }
