@@ -11,5 +11,6 @@ declare module 'micromark-util-types' {
     literalAutolinkEmail: 'literalAutolinkEmail'
     literalAutolinkHttp: 'literalAutolinkHttp'
     literalAutolinkWww: 'literalAutolinkWww'
+    literalAutolinkImage: 'literalAutolinkImage'
   }
 }

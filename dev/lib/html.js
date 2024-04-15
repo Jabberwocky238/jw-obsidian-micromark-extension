@@ -17,7 +17,11 @@ import {sanitizeUri} from 'micromark-util-sanitize-uri'
  */
 export function gfmAutolinkLiteralHtml() {
   return {
-    exit: {literalAutolinkEmail, literalAutolinkHttp, literalAutolinkWww}
+    exit: {
+      literalAutolinkEmail,
+      literalAutolinkHttp,
+      literalAutolinkWww
+    }
   }
 }
 
@@ -57,4 +61,3 @@ function anchorFromToken(token, protocol) {
   this.raw(this.encode(url))
   this.tag('</a>')
 }
-

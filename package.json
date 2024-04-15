@@ -3,6 +3,10 @@
   "version": "2.0.0",
   "description": "micromark extension to support GFM autolink literals",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jabberwocky238/micromicro.git"
+  },
   "keywords": [
     "micromark",
     "micromark-extension",

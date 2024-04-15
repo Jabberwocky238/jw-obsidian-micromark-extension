@@ -23,10 +23,16 @@ const wwwPrefix = {tokenize: tokenizeWwwPrefix, partial: true}
 const domain = {tokenize: tokenizeDomain, partial: true}
 const path = {tokenize: tokenizePath, partial: true}
 const trail = {tokenize: tokenizeTrail, partial: true}
-const emailDomainDotTrail = {tokenize: tokenizeEmailDomainDotTrail, partial: true}
+const emailDomainDotTrail = {
+  tokenize: tokenizeEmailDomainDotTrail,
+  partial: true
+}
 
 const wwwAutolink = {tokenize: tokenizeWwwAutolink, previous: previousWww}
-const protocolAutolink = {tokenize: tokenizeProtocolAutolink, previous: previousProtocol}
+const protocolAutolink = {
+  tokenize: tokenizeProtocolAutolink,
+  previous: previousProtocol
+}
 const emailAutolink = {tokenize: tokenizeEmailAutolink, previous: previousEmail}
 
 /** @type {ConstructRecord} */
@@ -915,14 +921,11 @@ function previousProtocol(code) {
  * @type {Previous}
  */
 function previousEmail(code) {
-  // Do not allow a slash “inside” atext.
-  // The reference code is a bit weird, but that’s what it results in.
-  // Source: <https://github.com/github/cmark-gfm/blob/ef1cfcb/extensions/autolink.c#L307>.
-  // Other than slash, every preceding character is allowed.
   return !(code === codes.slash || gfmAtext(code))
 }
 
 /**
+ * +-._ 大写字母
  * @param {Code} code
  * @returns {boolean}
  */
