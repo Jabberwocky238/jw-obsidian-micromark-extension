@@ -11,7 +11,7 @@
 
 import { codes } from 'micromark-util-symbol'
 
-const imageConstruct = { name: 'jwObsidianImage', tokenize: jwObsidianImageTokenize }
+const imageConstruct = { name: 'jwObsidianImage', tokenize: jwObsidianImageTokenize, partial: true}
 
 /** @type {ConstructRecord} */
 const text = {}

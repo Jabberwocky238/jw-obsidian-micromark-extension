@@ -1,14 +1,20 @@
 {
-  "name": "micromark-extension-gfm-autolink-literal",
+  "name": "jw-obsidian-micromark-extension",
   "version": "2.0.0",
-  "description": "micromark extension to support GFM autolink literals",
+  "description": "jw-obsidian-micromark-extension",
   "license": "MIT",
+  "author": {
+    "name": "Jabberwocky238",
+    "email": "jabberwocky238@gmail.com",
+    "url": "https://github.com/Jabberwocky238"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Jabberwocky238/micromicro.git"
   },
   "keywords": [
     "micromark",
+    "obsidian",
     "micromark-extension",
     "markdown"
   ],
