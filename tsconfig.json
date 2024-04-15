@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "checkJs": true,
-    "customConditions": ["development"],
     "declaration": true,
     "emitDeclarationOnly": true,
     "exactOptionalPropertyTypes": true,
@@ -10,6 +9,5 @@
     "strict": true,
     "target": "es2022"
   },
-  "exclude": ["coverage/", "lib/", "node_modules/", "index.js"],
-  "include": ["**/*.js", "dev-old/index.d.ts", "dev/zq.d.ts"]
+  "exclude": ["node_modules/"]
 }

@@ -42,7 +42,7 @@
   },
   "scripts": {
     "prepack": "npm run build",
-    "build": "tsc --build --clean && tsc --build && micromark-build",
+    "build": "micromark-build",
     "test-jw": "node --conditions production test/index.js",
     "test": "npm run build && npm run test-jw"
   },
