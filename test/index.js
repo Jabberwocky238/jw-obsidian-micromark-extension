@@ -4,14 +4,14 @@ import {micromark} from 'micromark'
 
 import {jwObsidian, jwObsidianHtml} from 'jw-obsidian-micromark-extension'
 
-test('micromark-extension-gfm-autolink-literal', async function (t) {
+test('![[image]]', async function (t) {
   await t.test('![[Pasted image 20240411144818.png]]', async function () {
     assert.equal(
-      micromark('esdfsdfs![[Pasted image 20240411144818.png]]dsgsdfsfc', {
+      micromark('我爱你![[Pasted image 20240411144818.png]]dsgsdfsfc', {
         extensions: [jwObsidian()],
         htmlExtensions: [jwObsidianHtml()],
       }),
-      '<p>esdfsdfs<img src="Pasted image 20240411144818.png">Pasted image 20240411144818.png</img>dsgsdfsfc</p>'
+      '<p>我爱你<img src="/assets/Pasted image 20240411144818.png" alt="Pasted image 20240411144818.png"></img>dsgsdfsfc</p>'
     )
   })
 })
