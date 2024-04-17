@@ -33,6 +33,24 @@ Yields:
 <p><img src="/assets/Pasted image 20240411144818.png" alt="Pasted image 20240411144818.png"></img></p>
 ```
 
+```js
+import { micromark } from 'micromark'
+import { jwObsidian, jwObsidianHtml } from 'jw-obsidian-micromark-extension'
+
+const output = micromark('![[Pasted image 20240411144818.png]]', {
+  extensions: [jwObsidian()],
+  htmlExtensions: [jwObsidianHtml({baseDir: 'markdown'})]
+})
+
+console.log(output)
+```
+
+Yields:
+
+```html
+<p><img src="/markdown/assets/Pasted image 20240411144818.png" alt="Pasted image 20240411144818.png"></img></p>
+```
+
 ## License
 
 [MIT][license]
