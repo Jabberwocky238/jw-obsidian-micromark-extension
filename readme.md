@@ -9,6 +9,7 @@ import {jwObsidian, jwObsidianHtml} from 'https://esm.sh/micromark-extension-gfm
 ```
 
 https://github.com/Jabberwocky238/micromicro
+
 [micromark][] extensions to support Obsidian asset link.
 
 
