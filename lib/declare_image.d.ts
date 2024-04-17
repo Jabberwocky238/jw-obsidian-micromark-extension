@@ -1,18 +1,21 @@
 /**
- * Create an extension for `micromark` to support GitHub autolink literal
- * syntax.
- *
- * @returns {Extension}
- *   Extension for `micromark` that can be passed in `extensions` to enable GFM
- *   autolink literal syntax.
+ * @param {Effects} effects
+ * @param {State} ok
+ * @param {State} nok
  */
-export function jwObsidian(): Extension;
+export function jwObsidianImageTokenize(effects: Effects, ok: State, nok: State): (code: import("micromark-util-types").Code) => import("micromark-util-types").State | undefined;
+export namespace imageConstruct {
+    export let name: string;
+    export { jwObsidianImageTokenize as tokenize };
+    export let partial: boolean;
+}
 export type Code = import('micromark-util-types').Code;
 export type ConstructRecord = import('micromark-util-types').ConstructRecord;
 export type Event = import('micromark-util-types').Event;
 export type Effects = import('micromark-util-types').Effects;
 export type Extension = import('micromark-util-types').Extension;
 export type Previous = import('micromark-util-types').Previous;
+export type TokenTypeMap = import('micromark-util-types').TokenTypeMap;
 export type State = import('micromark-util-types').State;
 export type TokenizeContext = import('micromark-util-types').TokenizeContext;
 export type Tokenizer = import('micromark-util-types').Tokenizer;

@@ -46,9 +46,10 @@
   },
   "scripts": {
     "prepack": "npm run build",
-    "build": "micromark-build",
+    "build": "tsc --build --clean && tsc --build && micromark-build",
     "test-jw": "node --conditions production test/index.js",
-    "test": "npm run build && npm run test-jw"
+    "test4file": "node --conditions production test/test4files.js",
+    "test": "npm run build && npm run test-jw && npm run test4file"
   },
   "prettier": {
     "bracketSpacing": false,

@@ -9,5 +9,6 @@
     "strict": true,
     "target": "es2022"
   },
-  "exclude": ["node_modules/"]
+  "exclude": ["node_modules/", "lib/", ],
+  "include": ["**/*.js", "index.d.ts"]
 }

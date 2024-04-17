@@ -5,7 +5,7 @@ npm install jw-obsidian-micromark-extension
 ```
 
 ```js
-import {jwObsidian, jwObsidianHtml} from 'https://esm.sh/micromark-extension-gfm-autolink-literal@2'
+import {jwObsidian, jwObsidianHtml} from 'jw-obsidian-micromark-extension'
 ```
 
 https://github.com/Jabberwocky238/micromicro
@@ -16,11 +16,8 @@ https://github.com/Jabberwocky238/micromicro
 ## Use
 
 ```js
-import {micromark} from 'micromark'
-import {
-  gfmAutolinkLiteral,
-  gfmAutolinkLiteralHtml
-} from 'micromark-extension-gfm-autolink-literal'
+import { micromark } from 'micromark'
+import { jwObsidian, jwObsidianHtml } from 'jw-obsidian-micromark-extension'
 
 const output = micromark('![[Pasted image 20240411144818.png]]', {
   extensions: [jwObsidian()],
