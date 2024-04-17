@@ -9,5 +9,6 @@ declare module 'micromark-util-types' {
   interface TokenTypeMap {
     jwObsidianImage: 'jwObsidianImage'
     jwObsidianImageMarker: 'jwObsidianImageMarker'
+    jwObsidianImageString: 'jwObsidianImageString'
   }
 }

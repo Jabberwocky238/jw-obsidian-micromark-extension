@@ -21,13 +21,11 @@
   "sideEffects": false,
   "type": "module",
   "files": [
-    "dev/",
     "lib/",
     "index.d.ts",
     "index.js"
   ],
   "exports": {
-    "development": "./dev/index.js",
     "default": "./index.js"
   },
   "dependencies": {
