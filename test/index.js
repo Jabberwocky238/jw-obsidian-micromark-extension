@@ -46,5 +46,31 @@ test('反向链接', async function (t) {
       '<p><a href="/markdown/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
     )
   })
+  
+  await t.test('指定文件夹', async function () {
+    assert.equal(
+      micromark('[[OCA 我草泥马————asd_ _]]', {
+        extensions: [jwObsidian()],
+        htmlExtensions: [jwObsidianHtml({
+          baseDir: 'markdown', 
+          reflexMap: new Map([['OCA 我草泥马————asd_ _', ['concepts', 'OCA 我草泥马————asd_ _']]])
+        })],
+      }),
+      '<p><a href="/markdown/concepts/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
+    )
+  })
+
+  await t.test('提取链接', async function () {
+    const url = "/wowow/OCA 我草泥马————asd_ _.md"
+    let _token = ''
+    const _extract = (token) => {
+      _token = token
+    }
+    micromark('[[OCA 我草泥马————asd_ _]]', {
+      extensions: [jwObsidian()],
+      htmlExtensions: [jwObsidianHtml({baseDir: 'wowow', extract: _extract})],
+    })
+    assert.equal(_token, url)
+  })
 })
 

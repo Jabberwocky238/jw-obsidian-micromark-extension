@@ -4,11 +4,8 @@
  * @param {State} nok
  */
 export function jwObsidianLinkTokenize(effects: Effects, ok: State, nok: State): (code: import("micromark-util-types").Code) => import("micromark-util-types").State | undefined;
-export namespace LinkConstruct {
-    export let name: string;
-    export { jwObsidianLinkTokenize as tokenize };
-    export let partial: boolean;
-}
+/** @type {Construct} */
+export const LinkConstruct: Construct;
 export type Code = import('micromark-util-types').Code;
 export type ConstructRecord = import('micromark-util-types').ConstructRecord;
 export type Event = import('micromark-util-types').Event;
@@ -17,4 +14,4 @@ export type Extension = import('micromark-util-types').Extension;
 export type Previous = import('micromark-util-types').Previous;
 export type State = import('micromark-util-types').State;
 export type TokenizeContext = import('micromark-util-types').TokenizeContext;
-export type Tokenizer = import('micromark-util-types').Tokenizer;
+export type Construct = import('micromark-util-types').Construct;

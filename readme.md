@@ -4,14 +4,9 @@
 npm install jw-obsidian-micromark-extension
 ```
 
-```js
-import {jwObsidian, jwObsidianHtml} from 'jw-obsidian-micromark-extension'
-```
-
 https://github.com/Jabberwocky238/micromicro
 
-[micromark][] extensions to support Obsidian asset link.
-
+[micromark][] extensions to support Obsidian asset & link.
 
 ## Use
 
@@ -19,37 +14,84 @@ https://github.com/Jabberwocky238/micromicro
 import { micromark } from 'micromark'
 import { jwObsidian, jwObsidianHtml } from 'jw-obsidian-micromark-extension'
 
-const output = micromark('![[Pasted image 20240411144818.png]]', {
+const output1 = micromark('![[Pasted image 20240411144818.png]]', {
   extensions: [jwObsidian()],
   htmlExtensions: [jwObsidianHtml()]
 })
-
-console.log(output)
+const output2 = micromark('[[OCA 我草泥马————asd_ _]]', {
+  extensions: [jwObsidian()],
+  htmlExtensions: [jwObsidianHtml()]
+})
+console.log(output1)
+console.log(output2)
 ```
 
 Yields:
 
 ```html
 <p><img src="/assets/Pasted image 20240411144818.png" alt="Pasted image 20240411144818.png"></img></p>
+<p><a href="/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>
 ```
+
+## Options
+```js
+export type JwOptions = {
+  baseDir?: string;
+  extract?: (token: string) => void | undefined;
+  reflexMap?: Map<string, string[]> | undefined;
+};
+```
+
+### baseDir
 
 ```js
-import { micromark } from 'micromark'
-import { jwObsidian, jwObsidianHtml } from 'jw-obsidian-micromark-extension'
-
-const output = micromark('![[Pasted image 20240411144818.png]]', {
+micromark('[[OCA 我草泥马————asd_ _]]', {
   extensions: [jwObsidian()],
-  htmlExtensions: [jwObsidianHtml({baseDir: 'markdown'})]
+  htmlExtensions: [jwObsidianHtml({baseDir: 'markdown'})],
 })
-
-console.log(output)
 ```
-
-Yields:
 
 ```html
-<p><img src="/markdown/assets/Pasted image 20240411144818.png" alt="Pasted image 20240411144818.png"></img></p>
+<p><a href="/markdown/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>
 ```
+
+ps: work fine for image too
+
+### extract
+
+```js
+const url = "/wowow/OCA 我草泥马————asd_ _.md"
+let _token = ''
+const _extract = (token) => {
+  _token = token
+}
+micromark('[[OCA 我草泥马————asd_ _]]', {
+  extensions: [jwObsidian()],
+  htmlExtensions: [jwObsidianHtml({baseDir: 'wowow', extract: _extract})],
+})
+assert.equal(_token, url)
+```
+
+ps: this will not change token inside the state machine
+
+### reflexMap
+
+```js
+micromark('[[OCA 我草泥马————asd_ _]]', {
+  extensions: [jwObsidian()],
+  htmlExtensions: [jwObsidianHtml({
+    baseDir: 'markdown', 
+    reflexMap: new Map([['OCA 我草泥马————asd_ _', ['concepts', 'OCA 我草泥马————asd_ _']]])
+  })],
+})
+```
+
+```html
+<p><a href="/markdown/concepts/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>
+```
+
+ps: do NOT work for picture yet
+
 
 ## License
 
