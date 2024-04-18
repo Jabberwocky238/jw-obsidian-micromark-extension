@@ -80,7 +80,7 @@ micromark('[[OCA 我草泥马————asd_ _]]', {
   extensions: [jwObsidian()],
   htmlExtensions: [jwObsidianHtml({
     baseDir: 'markdown', 
-    reflexMap: new Map([['OCA 我草泥马————asd_ _', ['concepts', 'OCA 我草泥马————asd_ _']]])
+    reflexMap: new Map([['OCA 我草泥马————asd_ _.md', ['concepts', 'OCA 我草泥马————asd_ _.md']]])
   })],
 })
 ```
