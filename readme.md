@@ -60,7 +60,6 @@ ps: work fine for image too
 ### extract
 
 ```js
-const url = "/wowow/OCA 我草泥马————asd_ _.md"
 let _token = ''
 const _extract = (token) => {
   _token = token
@@ -69,7 +68,7 @@ micromark('[[OCA 我草泥马————asd_ _]]', {
   extensions: [jwObsidian()],
   htmlExtensions: [jwObsidianHtml({baseDir: 'wowow', extract: _extract})],
 })
-assert.equal(_token, url)
+assert.equal(_token, "/wowow/OCA 我草泥马————asd_ _.md")
 ```
 
 ps: this will not change token inside the state machine

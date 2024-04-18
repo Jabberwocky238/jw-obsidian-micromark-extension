@@ -61,7 +61,6 @@ test('反向链接', async function (t) {
   })
 
   await t.test('提取链接', async function () {
-    const url = "/wowow/OCA 我草泥马————asd_ _.md"
     let _token = ''
     const _extract = (token) => {
       _token = token
@@ -70,7 +69,7 @@ test('反向链接', async function (t) {
       extensions: [jwObsidian()],
       htmlExtensions: [jwObsidianHtml({baseDir: 'wowow', extract: _extract})],
     })
-    assert.equal(_token, url)
+    assert.equal(_token, "/wowow/OCA 我草泥马————asd_ _.md")
   })
 })
 
