@@ -3,8 +3,9 @@ import test from 'node:test'
 import { micromark } from 'micromark'
 import { jwObsidian, jwObsidianHtml } from 'jw-obsidian-micromark-extension'
 
-//错误情况下的测试
+// 错误情况下的测试
 test('错误情况', async function (t) {
+    // 两层
     await t.test('这个是pic套link', async function () {
         assert.equal(
             micromark('这个是pic套link![[AA[[CCCC_ _ ]]AA]]', {
@@ -38,7 +39,9 @@ test('错误情况', async function (t) {
                 extensions: [jwObsidian()],
                 htmlExtensions: [jwObsidianHtml({ baseDir: 'markdown' })],
             }),
-            '<p>这个是link套link[[CCC<a href="/CCCC_ _ .md">CCCC_ _ </a>C_ _ ]]</p>'
+            '<p>这个是link套link[[CCC<a href="/markdown/CCCC_ _ .md">CCCC_ _ </a>C_ _ ]]</p>'
         )
     })
+    // 三层
+    // TODO!
 })
