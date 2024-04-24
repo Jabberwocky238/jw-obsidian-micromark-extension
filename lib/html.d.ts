@@ -7,22 +7,24 @@
  */
 /**
  * @typedef JwOptions
- * @property {string} [baseDir='']
- * @property {(token: string) => void | undefined} [extract]
- * @property {Map<string, string[]> | undefined} [reflexMap]
+ * @property {string} [imagePrefix]
+ * @property {string} [linkSuffix]
+ * @property {string} [baseDir]
+ * @property {(token: string) => string} [replacement]
  */
 /**
- * @param {JwOptions | null | undefined} [options]
+ * @param {JwOptions} [options]
  * @returns {HtmlExtension}
  */
-export function jwObsidianHtml(options?: JwOptions | null | undefined): HtmlExtension;
+export function jwObsidianHtml(options?: JwOptions | undefined): HtmlExtension;
 export type CompileContext = import('micromark-util-types').CompileContext;
 export type Handle = import('micromark-util-types').Handle;
 export type HtmlExtension = import('micromark-util-types').HtmlExtension;
 export type Token = import('micromark-util-types').Token;
 export type HtmlOptions = Record<string, Handle>;
 export type JwOptions = {
+    imagePrefix?: string;
+    linkSuffix?: string;
     baseDir?: string;
-    extract?: (token: string) => void | undefined;
-    reflexMap?: Map<string, string[]> | undefined;
+    replacement?: (token: string) => string;
 };

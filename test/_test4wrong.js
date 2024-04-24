@@ -44,4 +44,26 @@ test('错误情况', async function (t) {
     })
     // 三层
     // TODO!
+    
+    // 套括号
+    await t.test('link套4层', async function () {
+        assert.equal(
+            micromark('[[[[CCCC_ _ ]]]]', {
+                extensions: [jwObsidian()],
+                htmlExtensions: [jwObsidianHtml()],
+            }),
+            '<p>[[<a href="/CCCC_ _ .md">CCCC_ _ </a>]]</p>'
+        )
+    })
+
+    await t.test('pic套4层', async function () {
+        assert.equal(
+            micromark('![[[[CCCC_ _ .png]]]]', {
+                extensions: [jwObsidian()],
+                htmlExtensions: [jwObsidianHtml()],
+            }),
+            '<p>![[<a href="/CCCC_ _ .png.md">CCCC_ _ .png</a>]]</p>'
+        )
+    })
+
 })

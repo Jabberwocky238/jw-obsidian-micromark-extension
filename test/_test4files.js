@@ -5,14 +5,9 @@ import { micromark } from 'micromark'
 
 import { jwObsidian, jwObsidianHtml } from 'jw-obsidian-micromark-extension'
 
-export default test4file
-
 /** @param {String} filepath */
 function readFileSync4test(filepath){
-    return readFileSync(filepath)
-    .toString()
-    .replaceAll(/\r/g, '')
-    .replaceAll(/\n/g, '')
+    return readFileSync(filepath).toString()
 }
 
 function defaultCheck(filepath){
@@ -22,19 +17,23 @@ function defaultCheck(filepath){
         micromark(file1, {
             extensions: [jwObsidian()],
             htmlExtensions: [jwObsidianHtml()],
-        }).replaceAll(/\r/g, '').replaceAll(/\n/g, ''),
+        }),
         file2
     )
 }
 
-function test4file() {
-    test('test4files', async function (t) {
-        await t.test('normal-image', async function () {
-            defaultCheck("./test/testfile/normal-image")
-        })
-        await t.test('cross', async function () {
-            defaultCheck("./test/testfile/cross")
-        })
+test('test4files', async function (t) {
+    await t.test('normal-image', async function () {
+        defaultCheck("./test/testfile/normal-image")
     })
-}
-test4file()
+    await t.test('cross', async function () {
+        defaultCheck("./test/testfile/cross")
+    })
+    await t.test('FastV', async function () {
+        defaultCheck("./test/testfile/FastV")
+    })
+    await t.test('bigmodel', async function () {
+        defaultCheck("./test/testfile/bigmodel")
+    })
+})
+

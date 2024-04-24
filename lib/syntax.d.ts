@@ -1,10 +1,7 @@
 /**
- * Create an extension for `micromark` to support GitHub autolink literal
- * syntax.
+ * Create an extension for `micromark`
  *
  * @returns {Extension}
- *   Extension for `micromark` that can be passed in `extensions` to enable GFM
- *   autolink literal syntax.
  */
 export function jwObsidian(): Extension;
 export type Code = import('micromark-util-types').Code;
