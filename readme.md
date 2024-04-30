@@ -33,64 +33,13 @@ Yields:
 <p><a href="/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>
 ```
 
-## Options
-```js
-export type JwOptions = {
-  baseDir?: string;
-  extract?: (token: string) => void | undefined;
-  reflexMap?: Map<string, string[]> | undefined;
-};
-```
+## Caution
 
-### baseDir
+I am extremely sorry for no doc here.
 
-```js
-micromark('[[OCA 我草泥马————asd_ _]]', {
-  extensions: [jwObsidian()],
-  htmlExtensions: [jwObsidianHtml({baseDir: 'markdown'})],
-})
-```
+but i think the test case is simple enough to make you understand how it works.
 
-```html
-<p><a href="/markdown/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>
-```
-
-ps: work fine for image too
-
-### extract
-
-```js
-let _token = ''
-const _extract = (token) => {
-  _token = token
-}
-micromark('[[OCA 我草泥马————asd_ _]]', {
-  extensions: [jwObsidian()],
-  htmlExtensions: [jwObsidianHtml({baseDir: 'wowow', extract: _extract})],
-})
-assert.equal(_token, "/wowow/OCA 我草泥马————asd_ _.md")
-```
-
-ps: this will not change token inside the state machine
-
-### reflexMap
-
-```js
-micromark('[[OCA 我草泥马————asd_ _]]', {
-  extensions: [jwObsidian()],
-  htmlExtensions: [jwObsidianHtml({
-    baseDir: 'markdown', 
-    reflexMap: new Map([['OCA 我草泥马————asd_ _.md', ['concepts', 'OCA 我草泥马————asd_ _.md']]])
-  })],
-})
-```
-
-```html
-<p><a href="/markdown/concepts/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>
-```
-
-ps: do NOT work for picture yet
-
+after i finalize my education test i will rewrite a doc.
 
 ## License
 
