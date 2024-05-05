@@ -93,7 +93,6 @@ PS: `edit4image` and `edit4mark` are literally the same as `edit4link`
 
 PPS: `edit4sth` run before `edit`, in `edit4sth` you will get directly the raw token, but in `edit` you will get the token after `edit4sth`, which is exact the token filling the certain slot. So if not necessary, do not use `edit`.
 
-
 ## Thanks
 
 [micromark-extension-wiki-link](https://github.com/landakram/micromark-extension-wiki-link)
