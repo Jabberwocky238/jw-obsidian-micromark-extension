@@ -91,9 +91,7 @@ assert.equal(
 
 PS: `edit4image` and `edit4mark` are literally the same as `edit4link`
 
-PPS: 
-
-`edit4sth.` run before `edit`, in `edit4sth.` you will get the token after `edit`, but in `edit` you will get directly the token.
+PPS: `edit4sth.` run before `edit`, in `edit4sth.` you will get the token after `edit`, but in `edit` you will get directly the token.
 
 
 ## License
