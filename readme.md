@@ -14,23 +14,26 @@ https://github.com/Jabberwocky238/micromicro
 import { micromark } from 'micromark'
 import { jwObsidian, jwObsidianHtml } from 'jw-obsidian-micromark-extension'
 
-const output1 = micromark('![[Pasted image 20240411144818.png]]', {
+const str = [
+  '[[this is a link]]',
+  '![[this is an image.png]]',
+  '==this is highlight (mark)==',
+  '==robus=tness==',
+].join('\r\n\r\n')
+
+const result = micromark(str, {
   extensions: [jwObsidian()],
-  htmlExtensions: [jwObsidianHtml()]
+  htmlExtensions: [jwObsidianHtml()],
 })
-const output2 = micromark('[[OCA 我草泥马————asd_ _]]', {
-  extensions: [jwObsidian()],
-  htmlExtensions: [jwObsidianHtml()]
-})
-console.log(output1)
-console.log(output2)
 ```
 
 Yields:
 
 ```html
-<p><img src="/assets/Pasted image 20240411144818.png" alt="Pasted image 20240411144818.png"></img></p>
-<p><a href="/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>
+<p><a href="/this is a link.md">this is a link</a></p>
+<p><img src="/assets/this is an image.png" alt="/assets/this is an image.png"></img></p>
+<p><mark>this is highlight (mark)</mark></p>
+<p><mark>robus=tness</mark></p>
 ```
 
 ## Caution
