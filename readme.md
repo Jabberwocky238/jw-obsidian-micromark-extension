@@ -89,26 +89,6 @@ assert.equal(
 )
 ```
 
-### edit4link
-```js
-const _map = new Map([['OCA 我草泥马————asd_ _', ['concepts', 'OCA 我草泥马————asd_ _.md']]])
-const edit4link = (token) => {
-    const candidate = _map.get(token)
-    if (candidate) {
-        token = candidate.join('/')
-    }
-    return "/markdown/" + token
-}
-// console.log(reflexMap)
-assert.equal(
-    micromark('[[OCA 我草泥马————asd_ _]]', {
-        extensions: [jwObsidian()],
-        htmlExtensions: [jwObsidianHtml({ edit4link })],
-    }),
-    '<p><a href="/markdown/concepts/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
-)
-```
-
 PS: `edit4image` and `edit4mark` are literally the same as `edit4link`
 
 PPS: 
