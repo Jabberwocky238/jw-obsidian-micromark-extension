@@ -38,11 +38,83 @@ Yields:
 
 ## Caution
 
-I am extremely sorry for no doc here. 
+there are 5 options for jwObsidianHtml:
 
-but i think the test case is simple enough to make you understand how it works.
+- `baseDir`: string, default `''`
+- `edit`: function, default `(token) => token`
+- `edit4image`: function, default `(token) => ['assets', token].join('/')`
+- `edit4link`: function, default `(token) => [token, '.md'].join('')`
+- `edit4mark`: function, default `(token) => token`
 
-after i finalize my education test i will rewrite a doc.
+### baseDir
+```js
+micromark('[[OCA 我草泥马————asd_ _]]', {
+    extensions: [jwObsidian()],
+    htmlExtensions: [jwObsidianHtml({ baseDir: 'markdown' })],
+}),
+'<p><a href="/markdown/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
+```
+
+### edit
+```js
+const edit = (token) => {
+    return "/markdown" + token
+}
+assert.equal(
+    micromark('[[OCA 我草泥马————asd_ _]]', {
+        extensions: [jwObsidian()],
+        htmlExtensions: [jwObsidianHtml({ edit })],
+    }),
+    '<p><a href="/markdown/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
+)
+```
+
+### edit4link
+```js
+const _map = new Map([['OCA 我草泥马————asd_ _', ['concepts', 'OCA 我草泥马————asd_ _.md']]])
+const edit4link = (token) => {
+    const candidate = _map.get(token)
+    if (candidate) {
+        token = candidate.join('/')
+    }
+    return "/markdown/" + token
+}
+// console.log(reflexMap)
+assert.equal(
+    micromark('[[OCA 我草泥马————asd_ _]]', {
+        extensions: [jwObsidian()],
+        htmlExtensions: [jwObsidianHtml({ edit4link })],
+    }),
+    '<p><a href="/markdown/concepts/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
+)
+```
+
+### edit4link
+```js
+const _map = new Map([['OCA 我草泥马————asd_ _', ['concepts', 'OCA 我草泥马————asd_ _.md']]])
+const edit4link = (token) => {
+    const candidate = _map.get(token)
+    if (candidate) {
+        token = candidate.join('/')
+    }
+    return "/markdown/" + token
+}
+// console.log(reflexMap)
+assert.equal(
+    micromark('[[OCA 我草泥马————asd_ _]]', {
+        extensions: [jwObsidian()],
+        htmlExtensions: [jwObsidianHtml({ edit4link })],
+    }),
+    '<p><a href="/markdown/concepts/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
+)
+```
+
+PS: `edit4image` and `edit4mark` are literally the same as `edit4link`
+
+PPS: 
+
+`edit4sth.` run before `edit`, in `edit4sth.` you will get the token after `edit`, but in `edit` you will get directly the token.
+
 
 ## License
 
