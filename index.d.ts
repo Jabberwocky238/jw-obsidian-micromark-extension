@@ -13,5 +13,7 @@ declare module 'micromark-util-types' {
     jwObsidianImageString: 'jwObsidianImageString'
     jwObsidianLinkMarker: 'jwObsidianLinkMarker'
     jwObsidianLinkString: 'jwObsidianLinkString'
+    jwObsidianHighlightMarker: 'jwObsidianHighlightMarker'
+    jwObsidianHighlightString: 'jwObsidianHighlightString'
   }
 }

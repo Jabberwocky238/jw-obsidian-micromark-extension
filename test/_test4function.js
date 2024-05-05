@@ -7,7 +7,7 @@ import { jwObsidian, jwObsidianHtml } from 'jw-obsidian-micromark-extension'
 
 // 正常运行情况下的测试
 test('[[AAAA]]', async function (t) {
-    await t.test('默认情况', async function () {
+    await t.test('default', async function () {
         assert.equal(
             micromark('[[OCA 我草泥马————asd_ _]]', {
                 extensions: [jwObsidian()],
@@ -17,72 +17,92 @@ test('[[AAAA]]', async function (t) {
         )
     })
 
-    await t.test('指定baseDir', async function () {
-        const replacement = (token) => {
-            return "markdown/" + token
-        }
+    await t.test('base dir', async function () {
         assert.equal(
             micromark('[[OCA 我草泥马————asd_ _]]', {
                 extensions: [jwObsidian()],
-                htmlExtensions: [jwObsidianHtml({ replacement })],
+                htmlExtensions: [jwObsidianHtml({ baseDir: 'markdown' })],
             }),
             '<p><a href="/markdown/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
         )
     })
 
-    await t.test('指定文件夹', async function () {
-        const _map = new Map([['OCA 我草泥马————asd_ _.md', ['concepts', 'OCA 我草泥马————asd_ _.md']]])
-        const replacement = (token) => {
+    await t.test('global edit', async function () {
+        const edit = (token) => {
+            return "/markdown" + token
+        }
+        assert.equal(
+            micromark('[[OCA 我草泥马————asd_ _]]', {
+                extensions: [jwObsidian()],
+                htmlExtensions: [jwObsidianHtml({ edit })],
+            }),
+            '<p><a href="/markdown/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
+        )
+    })
+
+    await t.test('link edit', async function () {
+        const _map = new Map([['OCA 我草泥马————asd_ _', ['concepts', 'OCA 我草泥马————asd_ _.md']]])
+        const edit4link = (token) => {
             const candidate = _map.get(token)
-            if(candidate){
+            if (candidate) {
                 token = candidate.join('/')
             }
-            return "markdown/" + token
+            return "/markdown/" + token
         }
         // console.log(reflexMap)
         assert.equal(
             micromark('[[OCA 我草泥马————asd_ _]]', {
                 extensions: [jwObsidian()],
-                htmlExtensions: [jwObsidianHtml({
-                    replacement
-                })],
+                htmlExtensions: [jwObsidianHtml({ edit4link })],
             }),
             '<p><a href="/markdown/concepts/OCA 我草泥马————asd_ _.md">OCA 我草泥马————asd_ _</a></p>'
         )
     })
 
-    await t.test('提取链接', async function () {
+    await t.test('extract', async function () {
         let _token = ''
-        const replacement = (token) => {
-            token = "/wowow/" + token
+        const edit = (token) => {
+            token = "/wowow" + token
             _token = token
             return token
         }
         micromark('[[OCA 我草泥马————asd_ _]]', {
             extensions: [jwObsidian()],
-            htmlExtensions: [jwObsidianHtml({ replacement })],
+            htmlExtensions: [jwObsidianHtml({ edit })],
         })
         assert.equal(_token, "/wowow/OCA 我草泥马————asd_ _.md")
     })
 })
 
 test('![[AAAA]]', async function (t) {
-    await t.test('默认情况', async function () {
+    await t.test('default', async function () {
         assert.equal(
             micromark('我爱你![[Pasted image 20240411144818.png]]\r\n\r\ndsgsdfsfc', {
                 extensions: [jwObsidian()],
                 htmlExtensions: [jwObsidianHtml()],
             }),
-            '<p>我爱你<img src="/assets/Pasted image 20240411144818.png" alt="Pasted image 20240411144818.png"></img></p>\r\n<p>dsgsdfsfc</p>'
+            '<p>我爱你<img src="/assets/Pasted image 20240411144818.png" alt="/assets/Pasted image 20240411144818.png"></img></p>\r\n<p>dsgsdfsfc</p>'
         )
     })
-    await t.test('指定baseDir', async function () {
+})
+
+test('==AAAA==', async function (t) {
+    await t.test('default', async function () {
         assert.equal(
-            micromark('我爱你![[Pasted image 20240411144818.png]]dsgsdfsfc', {
+            micromark('我爱你==Pasted image 20240411144818.png==\r\n\r\ndsgsdfsfc', {
                 extensions: [jwObsidian()],
                 htmlExtensions: [jwObsidianHtml()],
             }),
-            '<p>我爱你<img src="/assets/Pasted image 20240411144818.png" alt="Pasted image 20240411144818.png"></img>dsgsdfsfc</p>'
+            '<p>我爱你<mark>Pasted image 20240411144818.png</mark></p>\r\n<p>dsgsdfsfc</p>'
+        )
+    })
+    await t.test('middle =', async function () {
+        assert.equal(
+            micromark('我爱你==Pasted image 2024041 = 1144 = 818.png==\r\n\r\ndsgsdfsfc', {
+                extensions: [jwObsidian()],
+                htmlExtensions: [jwObsidianHtml()],
+            }),
+            '<p>我爱你<mark>Pasted image 2024041 = 1144 = 818.png</mark></p>\r\n<p>dsgsdfsfc</p>'
         )
     })
 })
