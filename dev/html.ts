@@ -4,8 +4,7 @@ import type {
     HtmlExtension,
     Token
 } from 'micromark-util-types'
-type HtmlOptions = Record<string, Handle>
-
+import { token } from './utils.js'
 // variablesHtml is a function that
 // receives an object mapping “variables” to strings and returns an HTML extension.
 
@@ -17,21 +16,11 @@ type HtmlOptions = Record<string, Handle>
 // If the variable is defined, we ensure it’s made safe (with this.encode) and finally output that (with this.raw).
 
 type JwOptions = {
-    edit4image?: (token: string) => string
-    edit4link?: (token: string) => string
-    edit4mark?: (token: string) => string
-    baseDir?: string
     edit?: (token: string) => string
 }
 
 export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
-    if (options.edit4image === undefined)
-        options.edit4image = (token) => ['assets', token].join('/')
-    if (options.edit4link === undefined)
-        options.edit4link = (token) => [token, '.md'].join('')
-    if (options.edit4mark === undefined) options.edit4mark = (token) => token
     if (options.edit === undefined) options.edit = (token) => token
-    if (options.baseDir === undefined) options.baseDir = ''
 
     /**
      * @this {CompileContext}
@@ -47,12 +36,6 @@ export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
     ) {
         // this.resume();
         let token_str = this.sliceSerialize(token)
-        if (options.edit4image !== undefined) {
-            token_str = options.edit4image(token_str)
-        }
-        token_str = [options.baseDir, token_str]
-            .filter((item) => item !== '')
-            .join('/')
         token_str = slashcheck(token_str)
         if (options.edit !== undefined) {
             token_str = options.edit(token_str)
@@ -68,13 +51,7 @@ export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
     ) {
         // this.resume();
         let token_str = this.sliceSerialize(token)
-        if (options.edit4link !== undefined) {
-            token_str = options.edit4link(token_str)
-        }
-        token_str = [options.baseDir, token_str]
-            .filter((item) => item !== '')
-            .join('/')
-        token_str = slashcheck(token_str)
+        token_str = slashcheck(token_str) + ".md"
         if (options.edit !== undefined) {
             token_str = options.edit(token_str)
         }
@@ -89,9 +66,6 @@ export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
     ) {
         // this.resume();
         let token_str = this.sliceSerialize(token).slice(0, -2)
-        if (options.edit4mark !== undefined) {
-            token_str = options.edit4mark(token_str)
-        }
         this.tag('<mark>')
         this.raw(token_str)
         this.tag('</mark>')
@@ -99,14 +73,14 @@ export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
 
     return {
         enter: {
-            jwObsidianImageString: enterVariableString,
-            jwObsidianLinkString: enterVariableString,
-            jwObsidianHighlightString: enterVariableString
+            [token.jwImageString]: enterVariableString,
+            [token.jwLinkString]: enterVariableString,
+            [token.jwHighlightString]: enterVariableString
         },
         exit: {
-            jwObsidianImageString: exitVariableImageString,
-            jwObsidianLinkString: exitVariableLinkString,
-            jwObsidianHighlightString: exitVariableHighlightString
+            [token.jwImageString]: exitVariableImageString,
+            [token.jwLinkString]: exitVariableLinkString,
+            [token.jwHighlightString]: exitVariableHighlightString
         }
     } as HtmlExtension
 }

@@ -11,6 +11,7 @@ import {
 } from 'micromark-util-types'
 import {codes} from 'micromark-util-symbol'
 import {asciiAlphanumeric} from 'micromark-util-character'
+import { token } from './utils.js'
 
 export const imageConstruct: Construct = {
     name: 'jwObsidianImage',
@@ -30,8 +31,8 @@ export function jwObsidianImageTokenize(
     let bracket_cnt = 0
 
     const start: State = (code) => {
-        effects.enter('jwObsidian')
-        effects.enter('jwObsidianImageMarker')
+        effects.enter(token.jw)
+        effects.enter(token.jwImageMarker)
         if (code === codes.exclamationMark) {
             effects.consume(code)
             return LSB
@@ -49,8 +50,8 @@ export function jwObsidianImageTokenize(
             return nok(code)
         }
         if (bracket_cnt == 2) {
-            effects.exit('jwObsidianImageMarker')
-            effects.enter('jwObsidianImageString')
+            effects.exit(token.jwImageMarker)
+            effects.enter(token.jwImageString)
             // effects.enter('chunkString', {contentType: 'string'});
             return inside
         } else return LSB
@@ -82,8 +83,8 @@ export function jwObsidianImageTokenize(
 
         if (code === codes.rightSquareBracket /**右中括号*/) {
             // effects.exit('chunkString');
-            effects.exit('jwObsidianImageString')
-            effects.enter('jwObsidianImageMarker')
+            effects.exit(token.jwImageString)
+            effects.enter(token.jwImageMarker)
             return RSB
         }
 
@@ -107,8 +108,8 @@ export function jwObsidianImageTokenize(
         } else return nok(code)
 
         if (bracket_cnt == 0) {
-            effects.exit('jwObsidianImageMarker')
-            effects.exit('jwObsidian')
+            effects.exit(token.jwImageMarker)
+            effects.exit(token.jw)
             return ok(code)
         } else return RSB
     }

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {micromark} from 'micromark'
 
-import {jwObsidian, jwObsidianHtml} from 'jw-obsidian-micromark-extension'
+import {jwObsidian, jwObsidianHtml} from 'jw-micromark-toolbox'
 
 test('==AAAA==', async function (t) {
     await t.test('default', async function () {

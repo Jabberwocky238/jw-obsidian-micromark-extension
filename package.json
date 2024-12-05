@@ -1,7 +1,7 @@
 {
-    "name": "jw-obsidian-micromark-extension",
+    "name": "jw-micromark-toolbox",
     "version": "0.1.1",
-    "description": "jw-obsidian-micromark-extension",
+    "description": "jw-micromark-toolbox",
     "license": "MIT",
     "author": {
         "name": "Jabberwocky238",
@@ -10,7 +10,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Jabberwocky238/micromicro.git"
+        "url": "git+https://github.com/Jabberwocky238/jw-micromark-toolbox.git"
     },
     "keywords": [
         "micromark",

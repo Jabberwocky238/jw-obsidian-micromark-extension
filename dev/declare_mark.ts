@@ -1,4 +1,4 @@
-import {codes} from 'micromark-util-symbol'
+import { codes } from 'micromark-util-symbol'
 import type {
     Construct,
     TokenizeContext,
@@ -6,6 +6,7 @@ import type {
     Code,
     Effects
 } from 'micromark-util-types'
+import { token } from './utils.js'
 
 export const highlightConstruct = {
     name: 'jwObsidianHighlight',
@@ -26,8 +27,8 @@ export function jwObsidianHighlightTokenize(
     var cursor = 0
 
     const start: State = (code) => {
-        effects.enter('jwObsidian')
-        effects.enter('jwObsidianHighlightMarker')
+        effects.enter(token.jw)
+        effects.enter(token.jwHighlightMarker)
         return LSB
     }
 
@@ -37,8 +38,8 @@ export function jwObsidianHighlightTokenize(
             effects.consume(code)
         } else return nok(code)
         if (equalties == 2) {
-            effects.exit('jwObsidianHighlightMarker')
-            effects.enter('jwObsidianHighlightString')
+            effects.exit(token.jwHighlightMarker)
+            effects.enter(token.jwHighlightString)
             // effects.enter('chunkString', {contentType: 'string'});
             return inside
         } else return LSB
@@ -79,8 +80,8 @@ export function jwObsidianHighlightTokenize(
         }
 
         if (equalties == cursor) {
-            effects.exit('jwObsidianHighlightString')
-            effects.exit('jwObsidian')
+            effects.exit(token.jwHighlightString)
+            effects.exit(token.jw)
             return ok(code)
         } else {
             return RSB

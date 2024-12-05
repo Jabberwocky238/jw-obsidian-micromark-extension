@@ -10,6 +10,7 @@ import {
     Code
 } from 'micromark-util-types'
 import {codes} from 'micromark-util-symbol'
+import { token } from './utils.js'
 
 export const linkConstruct: Construct = {
     name: 'jwObsidianLink',
@@ -29,8 +30,8 @@ export function jwObsidianLinkTokenize(
     var bracket_cnt = 0
 
     const start: State = (code) => {
-        effects.enter('jwObsidian')
-        effects.enter('jwObsidianLinkMarker')
+        effects.enter(token.jw)
+        effects.enter(token.jwLinkMarker)
         return LSB
     }
 
@@ -40,8 +41,8 @@ export function jwObsidianLinkTokenize(
             effects.consume(code)
         } else return nok(code)
         if (bracket_cnt == 2) {
-            effects.exit('jwObsidianLinkMarker')
-            effects.enter('jwObsidianLinkString')
+            effects.exit(token.jwLinkMarker)
+            effects.enter(token.jwLinkString)
             // effects.enter('chunkString', {contentType: 'string'});
             return inside
         } else return LSB
@@ -70,8 +71,8 @@ export function jwObsidianLinkTokenize(
         }
         if (code === codes.rightSquareBracket) {
             // effects.exit('chunkString');
-            effects.exit('jwObsidianLinkString')
-            effects.enter('jwObsidianLinkMarker')
+            effects.exit(token.jwLinkString)
+            effects.enter(token.jwLinkMarker)
             return RSB
         }
         if (!markdownLineEnding(code)) {
@@ -88,8 +89,8 @@ export function jwObsidianLinkTokenize(
         } else return nok(code)
 
         if (bracket_cnt == 0) {
-            effects.exit('jwObsidianLinkMarker')
-            effects.exit('jwObsidian')
+            effects.exit(token.jwLinkMarker)
+            effects.exit(token.jw)
             return ok(code)
         } else return RSB
     }
