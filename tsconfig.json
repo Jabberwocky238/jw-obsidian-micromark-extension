@@ -1,14 +1,14 @@
 {
-  "include": ["./dev/**/*.ts"],
-  "exclude": ["node_modules", "lib"],
-  "compilerOptions": {
-    "target": "es2018",
-    "strict": true,
-    "declaration": true,
-    "outDir": "./lib",
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "moduleResolution": "Bundler"
-  }
+    "include": ["./dev/**/*.ts"],
+    "exclude": ["node_modules", "lib"],
+    "compilerOptions": {
+        "target": "es2018",
+        "strict": true,
+        "declaration": true,
+        "outDir": "./lib",
+        "forceConsistentCasingInFileNames": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "moduleResolution": "Bundler"
+    }
 }

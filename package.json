@@ -1,62 +1,60 @@
 {
-  "name": "jw-obsidian-micromark-extension",
-  "version": "0.1.1",
-  "description": "jw-obsidian-micromark-extension",
-  "license": "MIT",
-  "author": {
-    "name": "Jabberwocky238",
-    "email": "jabberwocky238@gmail.com",
-    "url": "https://github.com/Jabberwocky238"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Jabberwocky238/micromicro.git"
-  },
-  "keywords": [
-    "micromark",
-    "micromark-extension",
-    "markdown"
-  ],
-  "sideEffects": false,
-  "main": "./lib/index.js",
-  "type": "module",
-  "files": [
-    "lib/**/*.js",
-    "lib/**/*.d.ts"
-  ],
-  "exports": {
-    "default": "./lib/index.js"
-  },
-  "dependencies": {
-    "micromark-util-character": "^2.0.0",
-    "micromark-util-sanitize-uri": "^2.0.0",
-    "micromark-util-symbol": "^2.0.0",
-    "micromark-util-types": "^2.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.0.0",
-    "micromark": "^4.0.0",
-    "micromark-build": "^2.0.0",
-    "prettier": "^2.0.0",
-    "rehype": "^12.0.0",
-    "remark-cli": "^11.0.0",
-    "remark-preset-wooorm": "^9.0.0",
-    "typescript": "^5.0.0"
-  },
-  "scripts": {
-    "build": "tsc --build --clean && tsc && micromark-build",
-    "clean": "tsc --build --clean",
-    "test4wrong": "node --conditions production test/test4wrong.js",
-    "test4function": "node --conditions production test/test4function.js",
-    "test4files": "node --conditions production test/test4files.js",
-    "test": "npm run test4files && npm run test4function && npm run test4wrong"
-  },
-  "prettier": {
-    "bracketSpacing": false,
-    "semi": false,
-    "singleQuote": true,
-    "tabWidth": 4,
-    "trailingComma": "none",
-    "useTabs": false
-  }
+    "name": "jw-obsidian-micromark-extension",
+    "version": "0.1.1",
+    "description": "jw-obsidian-micromark-extension",
+    "license": "MIT",
+    "author": {
+        "name": "Jabberwocky238",
+        "email": "jabberwocky238@gmail.com",
+        "url": "https://github.com/Jabberwocky238"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Jabberwocky238/micromicro.git"
+    },
+    "keywords": [
+        "micromark",
+        "micromark-extension",
+        "markdown"
+    ],
+    "sideEffects": false,
+    "main": "./lib/index.js",
+    "type": "module",
+    "files": [
+        "lib/**/*.js",
+        "lib/**/*.d.ts"
+    ],
+    "exports": {
+        "default": "./lib/index.js"
+    },
+    "dependencies": {
+        "micromark-util-character": "^2.0.0",
+        "micromark-util-sanitize-uri": "^2.0.0",
+        "micromark-util-symbol": "^2.0.0",
+        "micromark-util-types": "^2.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "micromark": "^4.0.0",
+        "micromark-build": "^2.0.0",
+        "prettier": "^2.0.0",
+        "rehype": "^12.0.0",
+        "remark-cli": "^11.0.0",
+        "remark-preset-wooorm": "^9.0.0",
+        "typescript": "^5.0.0"
+    },
+    "scripts": {
+        "build": "tsc --build --clean && tsc && micromark-build",
+        "clean": "tsc --build --clean",
+        "format": "prettier --write .",
+        "test": "node --conditions production test/index.js"
+    },
+    "prettier": {
+        "bracketSpacing": false,
+        "semi": false,
+        "singleQuote": true,
+        "tabWidth": 4,
+        "trailingComma": "none",
+        "useTabs": false
+    }
 }
