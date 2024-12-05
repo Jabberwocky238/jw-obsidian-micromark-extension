@@ -1,4 +1,4 @@
-import { codes } from 'micromark-util-symbol'
+import {codes} from 'micromark-util-symbol'
 import type {
     Construct,
     TokenizeContext,
@@ -6,17 +6,13 @@ import type {
     Code,
     Effects
 } from 'micromark-util-types'
-import { token } from './utils.js'
+import {markdownLineEnding, token} from './utils.js'
 
 export const highlightConstruct = {
     name: 'jwObsidianHighlight',
     tokenize: jwObsidianHighlightTokenize,
     partial: true
 } as Construct
-
-function markdownLineEnding(code: Code | null) {
-    return code === null || code < codes.horizontalTab
-}
 
 export function jwObsidianHighlightTokenize(
     effects: Effects,

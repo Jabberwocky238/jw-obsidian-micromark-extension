@@ -9,7 +9,7 @@ test('readme', async function (t) {
         const str = [
             '[[this is a link]]',
             '![[this is an image.png]]',
-            '==this is highlight (mark)==',
+            '==this is highlight (mark)=='
         ].join('\r\n\r\n')
         assert.equal(
             micromark(str, {
@@ -19,7 +19,7 @@ test('readme', async function (t) {
             [
                 '<p><a href="/this is a link">this is a link</a></p>',
                 '<p><img src="/this is an image.png" alt="/this is an image.png"></img></p>',
-                '<p><mark>this is highlight (mark)</mark></p>',
+                '<p><mark>this is highlight (mark)</mark></p>'
             ].join('\r\n')
         )
     })

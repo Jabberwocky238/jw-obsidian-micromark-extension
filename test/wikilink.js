@@ -33,7 +33,6 @@ async function global_edit() {
     )
 }
 
-
 async function extract() {
     let _token = ''
     const edit = (token) => {

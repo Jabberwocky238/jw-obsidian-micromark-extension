@@ -1,4 +1,5 @@
-import { TokenTypeMap } from 'micromark-util-types'
+import { codes } from 'micromark-util-symbol'
+import { Code, TokenTypeMap } from 'micromark-util-types'
 
 type jwImage = Pick<TokenTypeMap, 'jwImageMarker' | 'jwImageString'>
 type jwLink = Pick<TokenTypeMap, 'jwLinkMarker' | 'jwLinkString'>
@@ -12,5 +13,9 @@ export const token: jwToken = {
     jwLinkMarker: 'jwLinkMarker',
     jwLinkString: 'jwLinkString',
     jwHighlightMarker: 'jwHighlightMarker',
-    jwHighlightString: 'jwHighlightString',
+    jwHighlightString: 'jwHighlightString'
+}
+
+export function markdownLineEnding(code: Code | null) {
+    return code === null || code < codes.horizontalTab
 }

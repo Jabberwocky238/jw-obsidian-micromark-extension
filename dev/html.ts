@@ -4,7 +4,7 @@ import type {
     HtmlExtension,
     Token
 } from 'micromark-util-types'
-import { token } from './utils.js'
+import {token} from './utils.js'
 // variablesHtml is a function that
 // receives an object mapping “variables” to strings and returns an HTML extension.
 
@@ -22,11 +22,10 @@ type JwOptions = {
 export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
     if (options.edit === undefined) options.edit = (token) => token
 
-    /**
-     * @this {CompileContext}
-     * @returns {undefined}
-     */
-    function enterVariableString() {
+    const enterVariableString: Handle = function (
+        this: CompileContext,
+        token: Token
+    ) {
         // this.buffer();
     }
 
@@ -51,7 +50,7 @@ export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
     ) {
         // this.resume();
         let token_str = this.sliceSerialize(token)
-        token_str = slashcheck(token_str) + ".md"
+        token_str = slashcheck(token_str) + '.md'
         if (options.edit !== undefined) {
             token_str = options.edit(token_str)
         }

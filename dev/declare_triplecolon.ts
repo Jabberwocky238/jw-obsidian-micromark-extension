@@ -9,51 +9,41 @@ import {
     ConstructRecord,
     Code
 } from 'micromark-util-types'
-import {codes} from 'micromark-util-symbol'
-import {asciiAlphanumeric} from 'micromark-util-character'
-import {token,markdownLineEnding} from './utils.js'
+import { codes } from 'micromark-util-symbol'
+import { token, markdownLineEnding } from './utils.js'
 
-export const imageConstruct: Construct = {
-    name: 'jwObsidianImage',
-    tokenize: jwObsidianImageTokenize,
+export const triplecolonConstruct: Construct = {
+    name: 'eeeetriplecolonConstruct',
+    tokenize: jwObsidianLinkTokenize,
     partial: true
 }
 
-export function jwObsidianImageTokenize(
+export function jwObsidianLinkTokenize(
     effects: Effects,
     ok: State,
     nok: State
 ) {
-    let bracket_cnt = 0
+    var bracket_cnt = 0
 
     const start: State = (code) => {
         effects.enter(token.jw)
-        effects.enter(token.jwImageMarker)
-        if (code === codes.exclamationMark) {
-            effects.consume(code)
-            return LSB
-        } else {
-            return nok(code)
-        }
+        effects.enter(token.jwLinkMarker)
+        return LSB
     }
 
-    /** @type {State} */
     const LSB: State = (code) => {
         if (code === codes.leftSquareBracket) {
             bracket_cnt++
             effects.consume(code)
-        } else {
-            return nok(code)
-        }
+        } else return nok(code)
         if (bracket_cnt == 2) {
-            effects.exit(token.jwImageMarker)
-            effects.enter(token.jwImageString)
+            effects.exit(token.jwLinkMarker)
+            effects.enter(token.jwLinkString)
             // effects.enter('chunkString', {contentType: 'string'});
             return inside
         } else return LSB
     }
 
-    /** @type {State} */
     const insideEscape: State = (code) => {
         if (
             code === codes.backslash ||
@@ -64,7 +54,6 @@ export function jwObsidianImageTokenize(
         }
         return inside(code)
     }
-    /** @type {State} */
     const inside: State = (code) => {
         if (
             markdownLineEnding(code) ||
@@ -76,27 +65,19 @@ export function jwObsidianImageTokenize(
             effects.consume(code)
             return insideEscape
         }
-
-        if (code === codes.rightSquareBracket /**右中括号*/) {
+        if (code === codes.rightSquareBracket) {
             // effects.exit('chunkString');
-            effects.exit(token.jwImageString)
-            effects.enter(token.jwImageMarker)
+            effects.exit(token.jwLinkString)
+            effects.enter(token.jwLinkMarker)
             return RSB
         }
-
-        if (
-            asciiAlphanumeric(code) ||
-            code === codes.space ||
-            code === codes.dot
-        ) {
+        if (!markdownLineEnding(code)) {
             effects.consume(code)
             return inside
         } else {
             return nok(code)
         }
     }
-
-    /** @type {State} */
     const RSB: State = (code) => {
         if (code === codes.rightSquareBracket) {
             bracket_cnt--
@@ -104,7 +85,7 @@ export function jwObsidianImageTokenize(
         } else return nok(code)
 
         if (bracket_cnt == 0) {
-            effects.exit(token.jwImageMarker)
+            effects.exit(token.jwLinkMarker)
             effects.exit(token.jw)
             return ok(code)
         } else return RSB

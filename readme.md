@@ -17,7 +17,7 @@ import {jwObsidian, jwObsidianHtml} from 'jw-micromark-toolbox'
 const str = [
     '[[this is a link]]',
     '![[this is an image.png]]',
-    '==this is highlight (mark)==',
+    '==this is highlight (mark)=='
 ].join('\r\n\r\n')
 
 const result = micromark(str, {
