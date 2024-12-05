@@ -1,6 +1,6 @@
 {
   "name": "jw-obsidian-micromark-extension",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "jw-obsidian-micromark-extension",
   "license": "MIT",
   "author": {
@@ -10,11 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jabberwocky238/micromicro.git"
+    "url": "git+https://github.com/Jabberwocky238/micromicro.git"
   },
   "keywords": [
     "micromark",
-    "obsidian",
     "micromark-extension",
     "markdown"
   ],
@@ -47,7 +46,6 @@
   "scripts": {
     "build": "tsc --build --clean && tsc && micromark-build",
     "clean": "tsc --build --clean",
-    
     "test4wrong": "node --conditions production test/test4wrong.js",
     "test4function": "node --conditions production test/test4function.js",
     "test4files": "node --conditions production test/test4files.js",
