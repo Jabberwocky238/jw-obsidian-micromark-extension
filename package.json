@@ -47,7 +47,7 @@
         "build": "tsc --build --clean && tsc && micromark-build",
         "clean": "tsc --build --clean",
         "format": "prettier --write .",
-        "test": "node --conditions production test/index.js"
+        "test": "node test/index.js"
     },
     "prettier": {
         "bracketSpacing": false,
