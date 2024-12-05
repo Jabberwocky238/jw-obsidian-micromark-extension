@@ -19,14 +19,14 @@
     "markdown"
   ],
   "sideEffects": false,
+  "main": "./lib/index.js",
   "type": "module",
   "files": [
-    "lib/",
-    "index.d.ts",
-    "index.js"
+    "lib/**/*.js",
+    "lib/**/*.d.ts"
   ],
   "exports": {
-    "default": "./index.js"
+    "default": "./lib/index.js"
   },
   "dependencies": {
     "micromark-util-character": "^2.0.0",
@@ -45,13 +45,13 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "build": "tsc && micromark-build",
+    "build": "tsc --build --clean && tsc && micromark-build",
     "clean": "tsc --build --clean",
     
-    "test4wrong": "node --conditions production test/_test4wrong.js",
-    "test4function": "node --conditions production test/_test4function.js",
-    "test4files": "node --conditions production test/_test4files.js",
-    "test": "npm run build && npm run test4files && npm run test4function && npm run test4wrong"
+    "test4wrong": "node --conditions production test/test4wrong.js",
+    "test4function": "node --conditions production test/test4function.js",
+    "test4files": "node --conditions production test/test4files.js",
+    "test": "npm run test4files && npm run test4function && npm run test4wrong"
   },
   "prettier": {
     "bracketSpacing": false,

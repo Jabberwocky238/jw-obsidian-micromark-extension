@@ -1,18 +1,14 @@
 {
+  "include": ["./dev/**/*.ts"],
+  "exclude": ["node_modules", "lib"],
   "compilerOptions": {
-    "checkJs": true,
-    "declaration": true,  // 生成.d.ts声明文件
-    "emitDeclarationOnly": true,
-    "exactOptionalPropertyTypes": true,
-    "lib": ["es2022"],
-    "module": "node16", // 指定模块系统
-    "strict": true,// 启用所有严格类型检查选项
-    "target": "es2022", // 指定ECMAScript目标版本
-    "allowImportingTsExtensions": true
-  },
-  "exclude": ["node_modules/", "test/*.js"],
-  "include": [
-    "dev/*.ts", 
-    "index.d.ts"
-  ]
+    "target": "es2018",
+    "strict": true,
+    "declaration": true,
+    "outDir": "./lib",
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Bundler"
+  }
 }

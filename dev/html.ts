@@ -1,9 +1,6 @@
 
 
-type CompileContext = import('micromark-util-types').CompileContext
-type Handle = import('micromark-util-types').Handle
-type HtmlExtension = import('micromark-util-types').HtmlExtension
-type Token = import('micromark-util-types').Token
+import type { CompileContext, Handle, HtmlExtension, Token } from 'micromark-util-types'
 type HtmlOptions = Record<string, Handle>
 
 // variablesHtml is a function that 
@@ -24,30 +21,12 @@ type JwOptions = {
   edit?: (token: string) => string
 }
 
-/**
- * @param {JwOptions} [options]
- * @returns {HtmlExtension}
- */
-export function jwObsidianHtml(options: JwOptions = {}) {
+export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
   if (options.edit4image === undefined) options.edit4image = (token) => ['assets', token].join('/')
   if (options.edit4link === undefined) options.edit4link = (token) => [token, '.md'].join('')
   if (options.edit4mark === undefined) options.edit4mark = (token) => token
   if (options.edit === undefined) options.edit = (token) => token
   if (options.baseDir === undefined) options.baseDir = ''
-
-
-  return {
-    enter: {
-      jwObsidianImageString: enterVariableString,
-      jwObsidianLinkString: enterVariableString,
-      jwObsidianHighlightString: enterVariableString,
-    },
-    exit: {
-      jwObsidianImageString: exitVariableImageString,
-      jwObsidianLinkString: exitVariableLinkString,
-      jwObsidianHighlightString: exitVariableHighlightString,
-    }
-  };
 
   /**
    * @this {CompileContext}
@@ -57,12 +36,7 @@ export function jwObsidianHtml(options: JwOptions = {}) {
     // this.buffer();
   }
 
-  /**
-   * @this {CompileContext}
-   * @type {Handle}
-   * @returns {undefined}
-   */
-  function exitVariableImageString(token) {
+  const exitVariableImageString: Handle = function (this: CompileContext, token: Token) {
     // this.resume();
     let token_str = this.sliceSerialize(token)
     if (options.edit4image !== undefined) {
@@ -80,12 +54,7 @@ export function jwObsidianHtml(options: JwOptions = {}) {
     this.tag('</img>');
   }
 
-  /**
-   * @this {CompileContext}
-   * @type {Handle}
-   * @returns {undefined}
-   */
-  function exitVariableLinkString(token) {
+  const exitVariableLinkString: Handle = function (this: CompileContext, token: Token) {
     // this.resume();
     let token_str = this.sliceSerialize(token)
     if (options.edit4link !== undefined) {
@@ -103,12 +72,7 @@ export function jwObsidianHtml(options: JwOptions = {}) {
     this.tag('</a>');
   }
 
-  /**
-   * @this {CompileContext}
-   * @type {Handle}
-   * @returns {undefined}
-   */
-  function exitVariableHighlightString(token) {
+  const exitVariableHighlightString: Handle = function (this: CompileContext, token: Token) {
     // this.resume();
     let token_str = this.sliceSerialize(token).slice(0, -2)
     if (options.edit4mark !== undefined) {
@@ -118,6 +82,19 @@ export function jwObsidianHtml(options: JwOptions = {}) {
     this.raw(token_str);
     this.tag('</mark>');
   }
+
+  return {
+    enter: {
+      jwObsidianImageString: enterVariableString,
+      jwObsidianLinkString: enterVariableString,
+      jwObsidianHighlightString: enterVariableString,
+    },
+    exit: {
+      jwObsidianImageString: exitVariableImageString,
+      jwObsidianLinkString: exitVariableLinkString,
+      jwObsidianHighlightString: exitVariableHighlightString,
+    }
+  } as HtmlExtension;
 }
 
 
