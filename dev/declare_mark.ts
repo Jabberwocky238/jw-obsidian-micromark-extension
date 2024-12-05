@@ -1,51 +1,28 @@
-
-/**
- * @typedef {import('micromark-util-types').Code} Code
- * @typedef {import('micromark-util-types').ConstructRecord} ConstructRecord
- * @typedef {import('micromark-util-types').Event} Event
- * @typedef {import('micromark-util-types').Effects} Effects
- * @typedef {import('micromark-util-types').Extension} Extension
- * @typedef {import('micromark-util-types').Previous} Previous
- * @typedef {import('micromark-util-types').State} State
- * @typedef {import('micromark-util-types').TokenizeContext} TokenizeContext
- * @typedef {import('micromark-util-types').Construct} Construct
- */
 import { codes } from 'micromark-util-symbol';
+import type { Construct, TokenizeContext, State, Code, Effects } from 'micromark-util-types';
 
-
-/** @type {Construct} */
 export const highlightConstruct = {
     name: 'jwObsidianHighlight',
     tokenize: jwObsidianHighlightTokenize,
     partial: true
-};
+} as Construct;
 
-/**
- * @param {Code | null} code
- */
-function markdownLineEnding(code) {
-    return code === null || code < codes.horizontalTab 
+
+function markdownLineEnding(code: Code | null) {
+    return code === null || code < codes.horizontalTab
 }
 
-/**
- * @param {Effects} effects
- * @param {State} ok
- * @param {State} nok
- */
-export function jwObsidianHighlightTokenize(effects, ok, nok) {
+export function jwObsidianHighlightTokenize(effects: Effects, ok: State, nok: State) {
     var equalties = 0;
     var cursor = 0;
-    return start;
 
-    /** @type {State} */
-    function start(code) {
+    const start: State = (code) => {
         effects.enter('jwObsidian');
         effects.enter('jwObsidianHighlightMarker');
         return LSB;
     }
 
-    /** @type {State} */
-    function LSB(code) {
+    const LSB: State = (code) => {
         if (code === codes.equalsTo) {
             equalties++;
             effects.consume(code);
@@ -58,8 +35,15 @@ export function jwObsidianHighlightTokenize(effects, ok, nok) {
         } else return LSB;
     }
 
-    /** @type {State} */
-    function inside(code) {
+    const insideEscape: State = (code) => {
+        if (code === codes.backslash) {
+            effects.consume(code);
+            return inside;
+        }
+        return inside(code);
+    }
+
+    const inside: State = (code) => {
         if (markdownLineEnding(code)) {
             return nok(code);
         }
@@ -67,30 +51,18 @@ export function jwObsidianHighlightTokenize(effects, ok, nok) {
             effects.consume(code);
             return insideEscape;
         }
-
-        /** @type {State} */
-        function insideEscape(code) {
-            if (code === codes.backslash) {
-                effects.consume(code);
-                return inside;
-            }
-            return inside(code);
-        }
-
         if (code === codes.equalsTo) {
             return RSB;
         }
-
         effects.consume(code);
         return inside;
     }
 
-    /** @type {State} */
-    function RSB(code) {
+    const RSB: State = (code) => {
         if (code === codes.equalsTo) {
             cursor++;
             effects.consume(code);
-        } else if (code !== codes.equalsTo && cursor != 0){
+        } else if (code !== codes.equalsTo && cursor != 0) {
             cursor = 0;
             return inside;
         } else {
@@ -105,5 +77,7 @@ export function jwObsidianHighlightTokenize(effects, ok, nok) {
             return RSB;
         }
     }
+
+    return start;
 }
 

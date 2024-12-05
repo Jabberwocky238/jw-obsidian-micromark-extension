@@ -10,23 +10,19 @@
  * @typedef {import('micromark-util-types').Tokenizer} Tokenizer
  */
 
-import { codes } from 'micromark-util-symbol';
-import { imageConstruct } from './declare_image.js';
-import { linkConstruct } from './declare_link.js';
-import { highlightConstruct } from './declare_mark.js';
+import type { ConstructRecord, Extension } from 'micromark-util-types';
 
-/** @type {ConstructRecord} */
-const text = {};
+import { codes } from 'micromark-util-symbol';
+import { imageConstruct } from '../lib/declare_image.js';
+import { linkConstruct } from '../lib/declare_link.js';
+import { highlightConstruct } from '../lib/declare_mark.ts';
+
+const text: ConstructRecord = {};
 text[codes.exclamationMark] = imageConstruct;
 text[codes.leftSquareBracket] = linkConstruct
 text[codes.equalsTo] = highlightConstruct;
 
-/**
- * Create an extension for `micromark`
- *
- * @returns {Extension}
- */
-export function jwObsidian() {
+export function jwObsidian(): Extension {
   return {text};
 }
 

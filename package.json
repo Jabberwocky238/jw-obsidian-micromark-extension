@@ -45,7 +45,7 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "build": "tsc --build --clean && tsc --build && micromark-build",
+    "build": "tsc && micromark-build",
     "clean": "tsc --build --clean",
     
     "test4wrong": "node --conditions production test/_test4wrong.js",

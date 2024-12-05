@@ -1,10 +1,10 @@
-/**
- * @typedef {import('micromark-util-types').CompileContext} CompileContext
- * @typedef {import('micromark-util-types').Handle} Handle
- * @typedef {import('micromark-util-types').HtmlExtension} HtmlExtension
- * @typedef {import('micromark-util-types').Token} Token
- * @typedef {Record<string, Handle>} HtmlOptions
- */
+
+
+type CompileContext = import('micromark-util-types').CompileContext
+type Handle = import('micromark-util-types').Handle
+type HtmlExtension = import('micromark-util-types').HtmlExtension
+type Token = import('micromark-util-types').Token
+type HtmlOptions = Record<string, Handle>
 
 // variablesHtml is a function that 
 // receives an object mapping “variables” to strings and returns an HTML extension. 
@@ -16,20 +16,19 @@
 // exitVariableString calls resume, which is the inverse of buffer and returns the stashed value. 
 // If the variable is defined, we ensure it’s made safe (with this.encode) and finally output that (with this.raw).
 
-/**
- * @typedef JwOptions
- * @property {(token: string) => string} [edit4image]
- * @property {(token: string) => string} [edit4link]
- * @property {(token: string) => string} [edit4mark]
- * @property {string} [baseDir]
- * @property {(token: string) => string} [edit]
- */
+type JwOptions = {
+  edit4image?: (token: string) => string
+  edit4link?: (token: string) => string
+  edit4mark?: (token: string) => string
+  baseDir?: string
+  edit?: (token: string) => string
+}
 
 /**
  * @param {JwOptions} [options]
  * @returns {HtmlExtension}
  */
-export function jwObsidianHtml(options = {}) {
+export function jwObsidianHtml(options: JwOptions = {}) {
   if (options.edit4image === undefined) options.edit4image = (token) => ['assets', token].join('/')
   if (options.edit4link === undefined) options.edit4link = (token) => [token, '.md'].join('')
   if (options.edit4mark === undefined) options.edit4mark = (token) => token
@@ -121,10 +120,8 @@ export function jwObsidianHtml(options = {}) {
   }
 }
 
-/**
- * @param {string} str
- */
-function slashcheck(str) {
+
+function slashcheck(str: string) {
   if(!str.startsWith('/')){
     return '/' + str
   }
