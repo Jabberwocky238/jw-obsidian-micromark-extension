@@ -4,7 +4,8 @@ import type {
     HtmlExtension,
     Token
 } from 'micromark-util-types'
-import {token} from './utils.js'
+import { token } from './utils.js'
+import { ok as assert } from 'assert'
 // variablesHtml is a function that
 // receives an object mapping “variables” to strings and returns an HTML extension.
 
@@ -17,10 +18,12 @@ import {token} from './utils.js'
 
 type JwOptions = {
     edit?: (token: string) => string
+    linkprefix?: string | string[]
 }
 
 export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
     if (options.edit === undefined) options.edit = (token) => token
+    if (Array.isArray(options.linkprefix)) options.linkprefix = options.linkprefix.join('/')
 
     const enterVariableString: Handle = function (
         this: CompileContext,
@@ -70,17 +73,56 @@ export function jwObsidianHtml(options: JwOptions = {}): HtmlExtension {
         this.tag('</mark>')
     }
 
+    
+    const exitLink: Handle = function (
+        this: CompileContext,
+        token: Token
+    ) {
+        const regForLink = /\[([^\]]+)\]\(([^\)]+)\)/g
+        const regRes = regForLink.exec(this.sliceSerialize(token)) as RegExpExecArray
+        // [
+        //     '[zhihu](/p/716619038)',
+        //     'zhihu',
+        //     '/p/716619038',
+        //     index: 0,
+        //     input: '[zhihu](/p/716619038)',
+        //     groups: undefined
+        // ]
+        let alt = regRes[1]
+        let link = regRes[2]
+        // 判断是否有域名，如果有则忽略
+        if (link.startsWith('http')) {
+            this.tag('<a href="' + link + '">')
+            this.raw(alt)
+            this.tag('</a>')
+            return
+        }
+        let firstSlash = link.indexOf('/') === 0
+        if(firstSlash) {
+            link = link.slice(1)
+        }
+        link = (firstSlash ? '/' : '') + options.linkprefix + '/' + link
+        this.tag('<a href="' + link + '">')
+        this.raw(alt)
+        this.tag('</a>')
+    }
+
+    let exit: { [key: string]: Handle } = {
+        [token.jwImageString]: exitVariableImageString,
+        [token.jwLinkString]: exitVariableLinkString,
+        [token.jwHighlightString]: exitVariableHighlightString,
+    }
+    if (options.edit !== undefined) {
+        exit['link'] = exitLink
+    }
+
     return {
         enter: {
             [token.jwImageString]: enterVariableString,
             [token.jwLinkString]: enterVariableString,
             [token.jwHighlightString]: enterVariableString
         },
-        exit: {
-            [token.jwImageString]: exitVariableImageString,
-            [token.jwLinkString]: exitVariableLinkString,
-            [token.jwHighlightString]: exitVariableHighlightString
-        }
+        exit
     } as HtmlExtension
 }
 
