@@ -10,12 +10,11 @@ import {
     Code
 } from 'micromark-util-types'
 import {codes} from 'micromark-util-symbol'
-import {markdownLineEnding, token} from './utils.js'
-
+import { token} from './utils.js'
+import { markdownLineEnding } from 'micromark-util-character'
 export const linkConstruct: Construct = {
     name: 'jwObsidianLink',
     tokenize: jwObsidianLinkTokenize,
-    partial: true
 }
 
 export function jwObsidianLinkTokenize(

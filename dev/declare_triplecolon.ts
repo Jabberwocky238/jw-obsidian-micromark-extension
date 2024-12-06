@@ -10,19 +10,15 @@ import {
     Code
 } from 'micromark-util-types'
 import { codes } from 'micromark-util-symbol'
-import { token, markdownLineEnding } from './utils.js'
+import { token } from './utils.js'
+import { markdownLineEnding } from 'micromark-util-character'
 
 export const triplecolonConstruct: Construct = {
-    name: 'eeeetriplecolonConstruct',
-    tokenize: jwObsidianLinkTokenize,
-    partial: true
+    name: 'triplecolon',
+    tokenize: tokenize,
 }
 
-export function jwObsidianLinkTokenize(
-    effects: Effects,
-    ok: State,
-    nok: State
-) {
+export function tokenize(effects: Effects, ok: State, nok: State): State {
     var bracket_cnt = 0
 
     const start: State = (code) => {

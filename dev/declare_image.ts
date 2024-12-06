@@ -9,14 +9,14 @@ import {
     ConstructRecord,
     Code
 } from 'micromark-util-types'
-import {codes} from 'micromark-util-symbol'
-import {asciiAlphanumeric} from 'micromark-util-character'
-import {token,markdownLineEnding} from './utils.js'
+import { codes } from 'micromark-util-symbol'
+import { asciiAlphanumeric } from 'micromark-util-character'
+import { token } from './utils.js'
+import { markdownLineEnding } from 'micromark-util-character'
 
 export const imageConstruct: Construct = {
     name: 'jwObsidianImage',
     tokenize: jwObsidianImageTokenize,
-    partial: true
 }
 
 export function jwObsidianImageTokenize(
